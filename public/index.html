@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Any play home</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+</head>
+
+<body>
+    <h1>Home</h1>
+    <header id="header">
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#">Sign up</a></li>
+                <li><a href="#">Sign in</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Upload clip</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="tabs">
+        <div role="tablist" aria-label="Sample Tabs">
+            <button role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1" tabindex="0">
+                Main
+            </button>
+            <button role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2" tabindex="-1">
+                Listen
+            </button>
+            <button role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3" tabindex="-1">
+                Browse
+            </button>
+        </div>
+        <div id="panel-1" role="tabpanel" tabindex="0" aria-labelledby="tab-1">
+            <h2>Sound for your ears!</h2>
+            <p>Listen to auddio clips uploaded by other users, upload your own clips if they are under 2MB in size, like
+                and
+                comment on clips and share them with other friends or family members!</p>
+            <h2>Do you just want to tap tap tap?</h2>
+            <p>This might sound weird but meens you can just press the next or previous button to listen to the next or
+                previous
+                audio clip.<br /> Simular to the feature on tiktok.</p>
+            <h2>Don't want to tap tap tap?</h2>
+            <p>We have you covered. You can just browse the latest available audio clips as they are uploaded.</p>
+        </div>
+        <div id="panel-2" role="tabpanel" tabindex="0" aria-labelledby="tab-2" hidden>
+            <div id="stats">
+                <ul>
+                    <li>Title: My testing clip</li>
+                    <li>Uploaded by janeDoe04 at 2022/02/02</li>
+                    <li>Duration: 3 Minutes, 4 seconds</li>
+                    <li>Views: 100</li>
+                    <li>Comments: 5</li>
+                    <li>15 likes, 100 dislikes</li>
+                </ul>
+            </div>
+            <hr />
+            <button id="prev">Previous</button>
+            <button id="play">Play</button>
+            <button id="next">Next</button>
+            <button id="share">Share</button>
+            <button id="like">Like</button>
+            <button id="dislike">Dislike</button>
+            <button id="comment">Comment</button>
+        </div>
+        <div id="panel-3" role="tabpanel" tabindex="0" aria-labelledby="tab-3" hidden>
+            <p>Find all the latest available clips.</p>
+            <ul>
+                <li><a href="browse.html">My name is test.</a></li>
+                <li><a href="browse.html">First reaper beat</a></li>
+                <li><a href="browse.html">the guitar bits podcast: let me know what you think</a></li>
+                <li><a href="browse.html">Easy demo: improve network speed</a></li>
+                <li><a href="browse.html">How to find disk cleanup</a></li>
+                <li><a href="browse.html">My neighbor's dogs!</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>&copy; anyplay 2022</footer>
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const tabs = document.querySelectorAll('[role="tab"]');
+            const tabList = document.querySelector('[role="tablist"]');
+
+            // Add a click event handler to each tab
+            tabs.forEach((tab) => {
+                tab.addEventListener("click", changeTabs);
+            });
+
+            // Enable arrow navigation between tabs in the tab list
+            let tabFocus = 0;
+
+            tabList.addEventListener("keydown", (e) => {
+                // Move right
+                if (e.keyCode === 39 || e.keyCode === 37) {
+                    tabs[tabFocus].setAttribute("tabindex", -1);
+                    if (e.keyCode === 39) {
+                        tabFocus++;
+                        // If we're at the end, go to the start
+                        if (tabFocus >= tabs.length) {
+                            tabFocus = 0;
+                        }
+                        // Move left
+                    } else if (e.keyCode === 37) {
+                        tabFocus--;
+                        // If we're at the start, move to the end
+                        if (tabFocus < 0) {
+                            tabFocus = tabs.length - 1;
+                        }
+                    }
+
+                    tabs[tabFocus].setAttribute("tabindex", 0);
+                    tabs[tabFocus].focus();
+                }
+            });
+        });
+
+        function changeTabs(e) {
+            const target = e.target;
+            const parent = target.parentNode;
+            const grandparent = parent.parentNode;
+
+            // Remove all current selected tabs
+            parent
+                .querySelectorAll('[aria-selected="true"]')
+                .forEach((t) => t.setAttribute("aria-selected", false));
+
+            // Set this tab as selected
+            target.setAttribute("aria-selected", true);
+
+            // Hide all tab panels
+            grandparent
+                .querySelectorAll('[role="tabpanel"]')
+                .forEach((p) => p.setAttribute("hidden", true));
+
+            // Show the selected panel
+            grandparent.parentNode
+                .querySelector(`#${target.getAttribute("aria-controls")}`)
+                .removeAttribute("hidden");
+        }
+
+    </script>
+</body>
+
+</html>
