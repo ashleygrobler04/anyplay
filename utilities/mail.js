@@ -24,8 +24,4 @@ const sendEmail = async (address, subject, message) => {
     }
 };
 
-sendEmail(
-    "ashleygrobler04@gmail.com",
-    "This is a 2nd test testing out the anyplay mailing system once again",
-    "Hi there dear user. Thanks for receiving this email from us. We hope you have a great time and that this works.\nSorry for this being a second email so far but let's make sure it is all sorted."
-);
+module.exports=sendEmail
